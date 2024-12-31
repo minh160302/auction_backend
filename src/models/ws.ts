@@ -19,6 +19,6 @@ export type PlaceBidRequest = {
 }
 
 export enum Action {
-    VIEW_AUCTION_BIDS = "view_auctions_bid",
-    PLACE_BID = "place_bid"
+    VIEW_AUCTION_BIDS = "view_auction_bids",
+    PLACE_BID = "place_bid",
 }

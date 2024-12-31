@@ -52,20 +52,12 @@ class BidService {
                 return {
                     result: false,
                     message: "You have placed the highest bid already!",
-                    // "data": {
-                    //     "destination_id": `${auctionId}_${userId}`,
-                    //     "user_id": userId
-                    // }
                 }
             }
             else if (json["price"] + Constants.BID_INCREMENT > price) {
                 return {
                     result: false,
                     message: "Insufficient bid amount!",
-                    // "data": {
-                    //     "destination_id": `${auctionId}_${userId}`,
-                    //     "user_id": userId
-                    // }
                 }
             }
         }
@@ -82,20 +74,12 @@ class BidService {
                     return {
                         result: false,
                         message: "You have placed the highest bid already!",
-                        // "data": {
-                        //     "destination_id": `${auctionId}_${userId}`,
-                        //     "user_id": userId
-                        // }
                     }
                 }
                 else if (highestBid.price >= price) {
                     return {
                         result: false,
                         message: "Insufficient bid amount!",
-                        // "data": {
-                        //     "destination_id": `${auctionId}_${userId}`,
-                        //     "user_id": userId
-                        // }
                     }
                 }
             }
