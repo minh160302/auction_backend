@@ -52,6 +52,11 @@ export const initAuctionModel = (sequelize: Sequelize) => {
             starting_price: {
                 type: DataTypes.DOUBLE,
                 defaultValue: 0.0
+            },
+            bids_count: {
+                type: DataTypes.INTEGER,
+                defaultValue: 0,
+                allowNull: true,
             }
         },
         {

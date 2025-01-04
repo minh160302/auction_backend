@@ -5,6 +5,7 @@ import { initCategoryModel, Category } from "@models/Category";
 import { initProductModel, Product } from "@models/Product";
 import { initAuctionModel, Auction } from "@models/Auction";
 import { initBidModel, Bid } from "@models/Bid";
+import { initBookmarkModel, Bookmark } from "@models/Bookmark";
 
 const sequelize = Database.getInstance();
 
@@ -15,7 +16,8 @@ initCategoryModel(sequelize);
 initProductModel(sequelize);
 initAuctionModel(sequelize);
 initBidModel(sequelize);
-
+initBidModel(sequelize);
+initBookmarkModel(sequelize);
 
 // Relationships
 MainCategory.hasMany(Category, {
@@ -63,4 +65,23 @@ Bid.belongsTo(User, {
     foreignKey: "user_id",
 });
 
-export { sequelize, User, MainCategory, Category, Product, Auction, Bid };
+
+User.hasMany(Bookmark, {
+    foreignKey: "user_id",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE"
+});
+Bookmark.belongsTo(User, {
+    foreignKey: "user_id",
+});
+Auction.hasMany(Bookmark, {
+    foreignKey: "auction_id",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE"
+});
+Bookmark.belongsTo(Auction, {
+    foreignKey: "auction_id",
+});
+
+
+export { sequelize, User, MainCategory, Category, Product, Auction, Bid, Bookmark };

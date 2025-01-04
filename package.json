@@ -1,7 +1,10 @@
 {
   "dependencies": {
+    "@aws-sdk/client-sns": "^3.721.0",
     "@socket.io/admin-ui": "^0.5.1",
+    "@types/aws-sdk": "^2.7.4",
     "@types/cors": "^2.8.17",
+    "aws-sdk": "^2.1692.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
