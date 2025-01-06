@@ -5,7 +5,7 @@ export class Auction extends Model {
     public name!: string;
     public description!: string;
     public status!: string;
-    public created_at!: string;
+    public created_at!: Date;
     public start_time!: Date;
     public end_time!: Date;
     public product_id!: string;

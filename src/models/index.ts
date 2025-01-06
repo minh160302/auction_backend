@@ -40,10 +40,12 @@ Product.belongsTo(Category, {
 });
 
 
-Auction.hasOne(Product, {
-    foreignKey: "product_id"
+Auction.belongsTo(Product, {
+    foreignKey: "product_id",
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE"
 });
-Product.belongsTo(Auction, {
+Product.hasMany(Auction, {
     foreignKey: "product_id"
 });
 

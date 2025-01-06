@@ -2,7 +2,7 @@ import { Bookmark, sequelize } from '@models/index';
 import BookmarkService from '@services/BookmarkService';
 import { HttpError } from '@utils/HttpError';
 import express, { NextFunction, Request, Response } from 'express';
-import AWSClient from "@aws/index";
+import SnsClient from "@aws/sns";
 
 const router = express.Router();
 
@@ -32,7 +32,7 @@ router.post('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const bookmark: Bookmark = req.body;
         await BookmarkService.createBookmark(bookmark);
-        await AWSClient.subscribeUserToAuction(bookmark.auction_id.toString(), bookmark.user_id.toString());
+        await SnsClient.subscribeUserToAuction(bookmark.auction_id.toString(), bookmark.user_id.toString());
         res.json(bookmark);
     } catch (error) {
         next(new HttpError("Bad request: " + error, 400));
@@ -49,7 +49,7 @@ router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
         const queryParams = req.query;
         await BookmarkService.deleteBookmark(queryParams);
         if (queryParams.auction_id && queryParams.user_id) {
-            await AWSClient.unsubscribeUserFromAuction(queryParams.auction_id.toString(), queryParams.user_id.toString());
+            await SnsClient.unsubscribeUserFromAuction(queryParams.auction_id.toString(), queryParams.user_id.toString());
         }
         res.json({ message: "Bookmark deleted successfully" });
     } catch (error) {

@@ -43,7 +43,7 @@ class BidService {
      */
     private async validateBidCondition(userId: string, auctionId: string, price: number) {
         const cache = Cache.getInstance();
-        const cacheKey = `${auctionId}`;
+        const cacheKey = `highest_bid_auction_${auctionId}`;
         const auctionInfo = await cache.get(cacheKey);
 
         if (auctionInfo) {

@@ -1,23 +1,3 @@
-// import { createClient } from 'redis';
-
-// const client = createClient({
-//     username: 'default',
-//     password: 'g1n96w5Et52aAfg2tOFR5evkhqFFDnc0',
-//     socket: {
-//         host: 'redis-15666.c245.us-east-1-3.ec2.redns.redis-cloud.com',
-//         port: 15666
-//     }
-// });
-
-// client.on('error', err => console.log('Redis Client Error', err));
-
-// await client.connect();
-
-// await client.set('foo', 'bar');
-// const result = await client.get('foo');
-// console.log(result)  // >>> bar
-
-
 import { createClient, RedisClientType } from 'redis';
 
 class Cache {
@@ -28,11 +8,11 @@ class Cache {
     public static getInstance(): RedisClientType {
         if (!Cache.instance) {
             Cache.instance = createClient({
-                username: 'default',
-                password: 'g1n96w5Et52aAfg2tOFR5evkhqFFDnc0',
+                username: process.env.REDIS_USERNAME,
+                password: process.env.REDIS_PASSWORD,
                 socket: {
-                    host: 'redis-15666.c245.us-east-1-3.ec2.redns.redis-cloud.com',
-                    port: 15666
+                    host: process.env.REDIS_HOST,
+                    port: parseInt(process.env.REDIS_PORT || "6379")
                 }
             });
 

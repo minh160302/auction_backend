@@ -1,7 +1,8 @@
-import { sequelize } from '@models/index';
+import { Auction, sequelize } from '@models/index';
 import AuctionService from '@services/AuctionService';
 import { HttpError } from '@utils/HttpError';
 import express, { NextFunction, Request, Response } from 'express';
+import EventBridgeClient from "@aws/eventbridge";
 
 const router = express.Router();
 
@@ -62,5 +63,52 @@ router.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
 });
 
 
+
+/**
+ * Create auction
+ * - insert record
+ * - add EventBridge timed triggers
+ */
+router.post('/', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        // const hostUrl = `${req.protocol}://${req.get('host')}`;
+        const hostUrl = `https://your-api.example.com`;
+        console.log(hostUrl);
+        const body: Auction = req.body;
+        await sequelize.authenticate();
+        const { name, description, start_time, end_time, product_id, starting_price } = body;
+        const auction = await AuctionService.createAuction(name, description, start_time, end_time, product_id, starting_price);
+        await EventBridgeClient.scheduleAuctionEnd(auction.auction_id.toString(), auction.end_time, hostUrl + "/auctions/deactivate", "some_auth_token");
+        res.json({}).status(201);
+    } catch (error) {
+        if (error instanceof HttpError)
+            next(error);
+        else
+            next(new HttpError("Bad request: " + error, 400));
+    }
+});
+
+
+router.post('/activate', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+
+    } catch (error) {
+        if (error instanceof HttpError)
+            next(error);
+        else
+            next(new HttpError("Bad request: " + error, 400));
+    }
+});
+
+router.post('/deactivate', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+
+    } catch (error) {
+        if (error instanceof HttpError)
+            next(error);
+        else
+            next(new HttpError("Bad request: " + error, 400));
+    }
+});
 
 export default router;

@@ -7,11 +7,9 @@ import { SNS } from '@aws-sdk/client-sns';
 // JS SDK v3 does not support global configuration.
 // Codemod has attempted to pass values to each service client in this file.
 // You may need to update clients outside of this file, if they use global config.
-AWS.config.update({ region: process.env.AWS_REGION });
+// AWS.config.update({ region: process.env.AWS_REGION });
 
-const sns = new SNS({
-    region: process.env.AWS_REGION,
-});
+const sns = new SNS();
 
 /**
  * Ensures that an SNS topic exists, creating it if necessary.
